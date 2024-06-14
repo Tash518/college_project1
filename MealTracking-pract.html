@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealTracking pract</title>
+    <link rel="stylesheet" href="MealTracking-pract.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="meal-intake-form">
+            <form id="meal-form" action="">
+                <label for="meal-name">Meal Name:</label>
+                <input type="text" id="meal-name" required>
+                <div id="food-items">
+                    <div class="food-item">
+                        <label for="food-name">Food Item:</label>
+                        <input type="text" class="food-name" id="food-name" required>
+                        <label for="calories">Calories:</label>
+                        <input type="number" class="calories" id="calories">
+                        <button type="button" id="get-calories">Cet Calories</button>
+                    </div>
+                </div>
+                <button type="button" id="add-food">Add Another Food Item</button>
+                <button type="submit">Add Meal</button>
+            </form>
+        </div>
+        <div class="meal-tracking-output">
+            <h2>Meals For Today</h2>
+            <ul id="meal-list"></ul>
+            <h2>Total Calories Today: <span id="total-calories">0</span></h2>
+        </div>
+    </div>
+    <script src="MealTracking-pract.js"></script>
+</body>
+</html>
