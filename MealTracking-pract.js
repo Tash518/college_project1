@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCaloriesElement = document.getElementById('total-calories');
     const addFoodButton = document.getElementById('add-food');
 
+    
     const updateTotalCalories = () => {
         let totalCalories = 0;
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
@@ -11,13 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
             totalCalories+=meal.calories;
         });
         totalCaloriesElement.textContent = totalCalories;
+        console.log(totalCalories);
     };
 
+    const addMealToDom = (meal) => {
+        const mealItem = document.createElement('li');
+        mealItem.textContent = `${meal.name} - ${meal.calories} calories`;
+        mealList.appendChild(mealItem);
+    }; 
+
     const saveMeal = (meal) => {
-        const meals = JSON.parse(localStorage.getItem(meals)) || [];
+        const meals = JSON.parse(localStorage.getItem('meals')) || [];
         meals.push(meal);
         localStorage.setItem('meals', JSON.stringify(meals));
     };
+
     const loadMeals = () => {
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
         meals.forEach(meal=>{
@@ -26,11 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalCalories();
     };
 
-    const addMealToDom = (meal) => {
-        const mealItem = document.createElement('li');
-        mealItem.textContent = `${meal.name} - ${meal.calories} calories`;
-        mealList.appendChild(mealItem);
-    };
+    loadMeals();
 
     addFoodButton.addEventListener('click', () => {
         const foodItem = document.createElement('div');
@@ -45,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     mealForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
         const mealName = document.getElementById(`meal-name`).value;
         const foodNames = document.querySelectorAll('.food-name');
         const caloriesInputs = document.querySelectorAll('.calories');
