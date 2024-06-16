@@ -4,6 +4,7 @@ body{
     justify-content: center;
     align-items: center;
     display: flex;
+    flex-direction: column;
 }
 .app-container{
     background-color: rgb(44, 43, 43);
@@ -56,4 +57,20 @@ button:hover{
 .food-item label,
 .food-item input{
     width: 45%;
+}
+.meal-tracking-output{
+    height: fit-content;
+    width: auto;
+    width: fit-content;
+    border: 2px solid whitesmoke;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+}
+#meal-list{
+    border: 2px solid white;
+    background-color: rgb(18, 41, 33);
+    color: lightgreen;
 }

@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(totalCalories);
     };
 
-    const addMealToDom = (meal) => {
+  
+    const addMealToDom = (meal,index) => {
         const mealItem = document.createElement('li');
-        mealItem.textContent = `${meal.name} - ${meal.calories} calories`;
+        mealItem.textContent = `${meal.name} - ${meal.calories} calories :: time- ${meal.timestamp}`;
         mealList.appendChild(mealItem);
     }; 
 
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
         meals.push(meal);
         localStorage.setItem('meals', JSON.stringify(meals));
+        return meals.length - 1;
     };
 
     const loadMeals = () => {
@@ -34,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         updateTotalCalories();
     };
-
-    loadMeals();
 
     addFoodButton.addEventListener('click', () => {
         const foodItem = document.createElement('div');
@@ -72,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const meal = {
             name: mealName,
             foods: foods,
-            calories: totalCalories
+            calories: totalCalories,
+            timestamp: new Date().toLocaleString()
         };
 
-        saveMeal(meal);
-        addMealToDom(meal);
+        const index = saveMeal(meal);
+        addMealToDom(meal, index);
         updateTotalCalories();
         mealForm.reset();
 
