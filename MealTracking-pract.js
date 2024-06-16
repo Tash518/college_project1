@@ -3,24 +3,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const mealList = document.getElementById('meal-list');
     const totalCaloriesElement = document.getElementById('total-calories');
     const addFoodButton = document.getElementById('add-food');
+    const expandButton = document.getElementById('expandmeal');
 
-    
     const updateTotalCalories = () => {
         let totalCalories = 0;
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
         meals.forEach(meal => {
-            totalCalories+=meal.calories;
+            totalCalories += meal.calories;
         });
         totalCaloriesElement.textContent = totalCalories;
         console.log(totalCalories);
     };
 
-  
-    const addMealToDom = (meal,index) => {
+
+    const addMealToDom = (meal, index) => {
         const mealItem = document.createElement('li');
-        mealItem.textContent = `${meal.name} - ${meal.calories} calories :: time- ${meal.timestamp}`;
+        mealItem.innerHTML = `
+            ${meal.name} - ${meal.calories} calories :: time- ${meal.timestamp} 
+            <button class="expand-meal">Expand</button>
+            <ul class="food-list" style="display: none;"></ul>
+        `;
         mealList.appendChild(mealItem);
-    }; 
+
+        const expandButton = mealItem.querySelector('.expand-meal');
+        const foodList = mealItem.querySelector('.food-list');
+
+        expandButton.addEventListener('click', () => {
+            if (foodList.style.display === 'none') {
+                foodList.style.display = 'block';
+                foodList.innerHTML = ''; // Clear existing food list to avoid duplicates
+                meal.foods.forEach(food => {
+                    const foodItem = document.createElement('li');
+                    foodItem.textContent = `${food.name} - ${food.calories} calories`;
+                    foodList.appendChild(foodItem);
+                });
+            } else {
+                foodList.style.display = 'none';
+            }
+        });
+    };
+
+
 
     const saveMeal = (meal) => {
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
@@ -31,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadMeals = () => {
         const meals = JSON.parse(localStorage.getItem('meals')) || [];
-        meals.forEach(meal=>{
+        meals.forEach(meal => {
             addMealToDom(meal);
         });
         updateTotalCalories();
